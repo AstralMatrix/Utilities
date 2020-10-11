@@ -56,6 +56,14 @@ class BinarySearch(object):
                 int: The index the item was found, or should be inserted
                     at.
         '''
+        # Return the index if it is positive (element was found), if
+        # it is negitive, then the index is the location in which the
+        # element should be inserted. To cover if the item should be
+        # inserted at index 0, since a positve 0 and negative 0 do not
+        # exist, the insertion index was shifted in the negative
+        # direction by 1, the 1 is now being added here to shift it
+        # back up so that the insertion index is correct once the
+        # absolute value is taken.
         return self.__index if self.__index >= 0 else abs(self.__index + 1)
 
 
@@ -92,7 +100,7 @@ class BinarySearch(object):
         if data is None:
             return -1
         if search is None:
-            raise TypeError("search must not be None")
+            raise TypeError("`search` must not be None")
 
         left: int = 0
         right: int = len(data)
@@ -104,16 +112,18 @@ class BinarySearch(object):
             # Get the data term to compare from the data key.
             d = data_key(data[mid])
 
-            if s < d:
-                right = mid
-            elif s > d:
-                left = mid + 1
-            else:
-                return mid  
+            if s < d   : right = mid
+            elif s > d : left  = mid + 1
+            else       : return  mid  
 
         # Return the location the element should be inserted to keep
         # the data in order. This can be done, because at this point
-        # the right and left values are the same.
+        # the right and left values are the same. The 1 is subtracted
+        # from the negative left value to cover if the item should be
+        # inserted at index 0, since a positve 0 and negative 0 do not
+        # exist, every index needs to be shifted in the negative
+        # direction by 1 for the insertion index. This is later shifted
+        # back when getting the index. 
         return (-left) - 1
 
 
